@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-release-tempo-memcached
+  namespace: tempo
+  uid: cd473d02-3123-4d77-ab63-dce023c88b5c
+  resourceVersion: '4636'
+  generation: 1
+  creationTimestamp: '2025-01-25T18:54:09Z'
+  labels:
+    app.kubernetes.io/component: memcached
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: tempo
+    app.kubernetes.io/version: 2.7.0
+    helm.sh/chart: tempo-distributed-1.31.0
+  annotations:
+    meta.helm.sh/release-name: my-release
+    meta.helm.sh/release-namespace: tempo
+  selfLink: /apis/apps/v1/namespaces/tempo/statefulsets/my-release-tempo-memcached
+status:
+  observedGeneration: 1
+  replicas: 1
+  readyReplicas: 1
+  currentReplicas: 1
+  updatedReplicas: 1
+  currentRevision: my-release-tempo-memcached-5dcf498565
+  updateRevision: my-release-tempo-memcached-5dcf498565
+  collisionCount: 0
+  availableReplicas: 1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: memcached
+      app.kubernetes.io/instance: my-release
+      app.kubernetes.io/name: tempo
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: memcached
+        app.kubernetes.io/instance: my-release
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: tempo
+        app.kubernetes.io/version: 2.7.0
+        helm.sh/chart: tempo-distributed-1.31.0
+    spec:
+      containers:
+        - name: memcached
+          image: docker.io/memcached:1.6.33-alpine
+          ports:
+            - name: client
+              containerPort: 11211
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: my-release-tempo
+      serviceAccount: my-release-tempo
+      securityContext:
+        fsGroup: 1000
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: memcached
+                  app.kubernetes.io/instance: my-release
+                  app.kubernetes.io/name: tempo
+              topologyKey: kubernetes.io/hostname
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: memcached
+                    app.kubernetes.io/instance: my-release
+                    app.kubernetes.io/name: tempo
+                topologyKey: topology.kubernetes.io/zone
+      schedulerName: default-scheduler
+      enableServiceLinks: false
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: memcached
+              app.kubernetes.io/instance: my-release
+              app.kubernetes.io/name: tempo
+  serviceName: memcached
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 10

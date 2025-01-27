@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-release-tempo-gossip-ring
+  namespace: tempo
+  uid: 306c2141-53a0-483f-ab20-fb582334853e
+  resourceVersion: '4441'
+  creationTimestamp: '2025-01-25T18:54:09Z'
+  labels:
+    app.kubernetes.io/component: gossip-ring
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: tempo
+    app.kubernetes.io/version: 2.7.0
+    helm.sh/chart: tempo-distributed-1.31.0
+  annotations:
+    meta.helm.sh/release-name: my-release
+    meta.helm.sh/release-namespace: tempo
+  selfLink: /api/v1/namespaces/tempo/services/my-release-tempo-gossip-ring
+status:
+  loadBalancer: {}
+spec:
+  ports:
+    - name: gossip-ring
+      protocol: TCP
+      port: 7946
+      targetPort: 7946
+  selector:
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/name: tempo
+    app.kubernetes.io/part-of: memberlist
+  clusterIP: None
+  clusterIPs:
+    - None
+  type: ClusterIP
+  sessionAffinity: None
+  publishNotReadyAddresses: true
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster

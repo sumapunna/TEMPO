@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-release-tempo-runtime
+  namespace: tempo
+  uid: 8c294c3a-9724-4de6-9622-0ca3e9da4d2d
+  resourceVersion: '4432'
+  creationTimestamp: '2025-01-25T18:54:09Z'
+  labels:
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: tempo
+    app.kubernetes.io/version: 2.7.0
+    helm.sh/chart: tempo-distributed-1.31.0
+  annotations:
+    meta.helm.sh/release-name: my-release
+    meta.helm.sh/release-namespace: tempo
+  selfLink: /api/v1/namespaces/tempo/configmaps/my-release-tempo-runtime
+data:
+  overrides.yaml: |
+
+    overrides:
+      {}

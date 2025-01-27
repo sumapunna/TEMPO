@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-release-tempo-distributor-discovery
+  namespace: tempo
+  uid: 8c6a62d3-af05-45a8-a8f3-f3eede164920
+  resourceVersion: '4445'
+  creationTimestamp: '2025-01-25T18:54:09Z'
+  labels:
+    app.kubernetes.io/component: distributor
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: tempo
+    app.kubernetes.io/version: 2.7.0
+    helm.sh/chart: tempo-distributed-1.31.0
+    prometheus.io/service-monitor: 'false'
+  annotations:
+    meta.helm.sh/release-name: my-release
+    meta.helm.sh/release-namespace: tempo
+  selfLink: /api/v1/namespaces/tempo/services/my-release-tempo-distributor-discovery
+status:
+  loadBalancer: {}
+spec:
+  ports:
+    - name: http-metrics
+      protocol: TCP
+      port: 3100
+      targetPort: http-metrics
+  selector:
+    app.kubernetes.io/component: distributor
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/name: tempo
+  clusterIP: None
+  clusterIPs:
+    - None
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster

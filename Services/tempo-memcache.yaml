@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-release-tempo-memcached
+  namespace: tempo
+  uid: 968acbf1-f8b7-4d8f-a32f-21f6a2a8d344
+  resourceVersion: '4464'
+  creationTimestamp: '2025-01-25T18:54:09Z'
+  labels:
+    app.kubernetes.io/component: memcached
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: tempo
+    app.kubernetes.io/version: 2.7.0
+    helm.sh/chart: tempo-distributed-1.31.0
+  annotations:
+    meta.helm.sh/release-name: my-release
+    meta.helm.sh/release-namespace: tempo
+  selfLink: /api/v1/namespaces/tempo/services/my-release-tempo-memcached
+status:
+  loadBalancer: {}
+spec:
+  ports:
+    - name: memcached-client
+      protocol: TCP
+      port: 11211
+      targetPort: 11211
+    - name: http-metrics
+      protocol: TCP
+      port: 9150
+      targetPort: http-metrics
+  selector:
+    app.kubernetes.io/component: memcached
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/name: tempo
+  clusterIP: 10.96.46.45
+  clusterIPs:
+    - 10.96.46.45
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster
